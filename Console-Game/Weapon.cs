@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Console_Game
 {
-    //Fisherman //Seafood cook
-    internal class Player
+    //Harpoon //Butchers Knife //Fishing rod //Sear torch
+    internal class Weapon
     {
     }
 }
