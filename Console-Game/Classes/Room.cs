@@ -9,12 +9,12 @@ namespace Console_Game
     //Sea cave //Coral reef
     public class Room
     {
-        public string description;
-        public string north, south, east, west;
+        public string Description;
+        public Room North, South, East, West;
         public string[] items;
         public Room(string roomDescription)
         { 
-            description = roomDescription;
+            Description = roomDescription;
         }
     }
 }

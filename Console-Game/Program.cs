@@ -11,7 +11,12 @@ namespace Program
     {
         public static void Main()
         {
-            Room coralReef = new Room("");
+            Console.WriteLine("Welcome to - Ocean Slayer -");
+
+            Player player = new Player();
+            player.Name = "Fisherman Joe";
+
+            Room coralReef = new Room("You enter and meet a world of colors.\nThere's corals as far as you can see.\nYou feel yourself soothed by the sight.");
         }
     }
 }
