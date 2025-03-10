@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Console_Game
 {
-    //Harpoon //Butchers Knife //Fishing rod //Sear torch
     public class Item
     {
         public string name;
@@ -27,7 +26,7 @@ namespace Console_Game
 
         public void Hit()
         {
-
+            
         }
 
     }

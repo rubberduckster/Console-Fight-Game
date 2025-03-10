@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Console_Game
 {
-    //Pufferfish //
     internal class Monster
     {
+        public string Name;
+        public int Health;
     }
 }

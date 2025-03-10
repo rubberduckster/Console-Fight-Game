@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Console_Game
 {
-    //Fisherman //Seafood cook
     internal class Player
     {
         public string Name;
+        public int Health;
+
 
         public void Inventory()
         {

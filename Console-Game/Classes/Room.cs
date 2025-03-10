@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 
 namespace Console_Game
 {
-    //Sea cave //Coral reef
     public class Room
     {
+        public string Name;
         public string Description;
         public Room North, South, East, West;
-        public string[] items;
-        public Room(string roomDescription)
+        public List<Item> Items;
+        public Room(string roomName, string roomDescription, List<Item> roomItems)
         { 
             Description = roomDescription;
+            Name = roomName;
         }
     }
 }
