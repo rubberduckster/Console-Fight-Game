@@ -13,9 +13,9 @@ namespace Console_Game
         public Room North, South, East, West;
         public List<Item> Items;
         public Room(string roomName, string roomDescription, List<Item> roomItems)
-        { 
-            Description = roomDescription;
+        {
             Name = roomName;
+            Description = roomDescription;
         }
     }
 }

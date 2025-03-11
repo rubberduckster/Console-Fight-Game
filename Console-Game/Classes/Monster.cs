@@ -6,9 +6,19 @@ using System.Threading.Tasks;
 
 namespace Console_Game
 {
-    internal class Monster
+    public class Monster
     {
         public string Name;
+        public string Intro;
+        public string attackLine;
+        public string damageTakenLine;
         public int Health;
+        public int Damage;
+
+        public Monster(string monsterName, string monsterIntro)
+        {
+            Name = monsterName;
+            Intro = monsterIntro;
+        }
     }
 }

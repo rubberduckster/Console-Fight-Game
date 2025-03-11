@@ -8,7 +8,7 @@ namespace Console_Game
 {
     public class Item
     {
-        public string name;
+        public string Name;
 
         public void Use()
         {
@@ -19,15 +19,36 @@ namespace Console_Game
 
     public class Weapon : Item
     {
-        public string type;
-        public int damage;
-        public bool isRanged;
-        public int usesLeft;
+        public string AttackDescription;
+        public int Damage;
+        public bool IsRanged;
+        public int UsesLeft;
+
+        public Weapon(string weaponName, int weaponDamage, bool weaponIsRanged)
+        {
+            Name = weaponName;
+            IsRanged = weaponIsRanged;
+            Damage = weaponDamage;
+        }
 
         public void Hit()
         {
-            
+            UsesLeft--;
+
+
+            if (IsRanged = false)
+            {
+                Damage = Damage * 2;
+            }
         }
 
+    }
+
+    public class Potion : Item
+    {
+        public string type;
+        public int damageBoost;
+        public int healingBoost;
+        public int UsesLeft;
     }
 }
