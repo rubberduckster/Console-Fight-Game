@@ -6,15 +6,11 @@ using System.Threading.Tasks;
 
 namespace Console_Game
 {
-    internal class Player
+    public class Player
     {
-        public string Name;
-        public int Health;
-
-
-        public void Inventory()
-        {
-
-        }
+        public string Name = "Fisherman Joe";
+        public int Health = 300;
+        public List<Item> Inventory = new List<Item>();
+        public Weapon? EquippedWeapon = null;
     }
 }

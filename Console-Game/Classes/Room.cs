@@ -8,14 +8,22 @@ namespace Console_Game
 {
     public class Room
     {
+        public int Id;
         public string Name;
         public string Description;
-        public Room North, South, East, West;
+        public int North, South, East, West;
         public List<Item> Items;
-        public Room(string roomName, string roomDescription, List<Item> roomItems)
+        public Monster Monster { get; set; }
+        public Room(int roomId, string roomName, string roomDescription, List<Item>? roomItems, Monster? roomMonster, int roomNorth, int roomSouth, int roomEast, int roomWest)
         {
+            Id = roomId;
             Name = roomName;
             Description = roomDescription;
+            Items = roomItems;
+            North = roomNorth;
+            South = roomSouth;
+            East = roomEast;
+            West = roomWest;
         }
     }
 }

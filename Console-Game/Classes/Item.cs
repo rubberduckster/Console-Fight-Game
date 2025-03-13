@@ -24,13 +24,15 @@ namespace Console_Game
         public bool IsRanged;
         public int UsesLeft;
 
-        public Weapon(string weaponName, int weaponDamage, bool weaponIsRanged)
+        public Weapon(string weaponName, int weaponDamage, bool weaponIsRanged, int weaponUsesLeft)
         {
             Name = weaponName;
             IsRanged = weaponIsRanged;
             Damage = weaponDamage;
+            UsesLeft = weaponUsesLeft;
         }
 
+        //Break or remove item (uses left)
         public void Hit()
         {
             UsesLeft--;

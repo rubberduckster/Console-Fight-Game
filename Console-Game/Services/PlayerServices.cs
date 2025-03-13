@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Console_Game.Services
+namespace Console_Game
 {
-    internal class PlayerServices
+    public class PlayerServices
     {
+        
     }
+    //Picks up item and adds to inventory / Equip weapon / Use weapon / Use potion
 }

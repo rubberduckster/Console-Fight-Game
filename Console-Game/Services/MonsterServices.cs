@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Console_Game
+namespace Console_Game.Services
 {
-    public class Music
+    internal class MonsterServices
     {
-        public bool isBattle;
+
     }
 }
