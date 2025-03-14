@@ -20,7 +20,7 @@ namespace Console_Game
 
             Rooms = new List<Room>
             {
-                new Room(1, "Beach", "You walk up on the beach, standing at the edge of the water, it washing over you feet.",
+                new Room(1, "Beach", "You walk up on the beach, standing at the edge of the water, feeling the waves wash over you feet.",
                 new List<Item>
                 {
                     new Weapon("Wooden stick", 5, false, 5)
@@ -100,24 +100,28 @@ namespace Console_Game
             };
         }
 
+        //Gets room by it's Id
         public Room GetRoomById(int roomId)
         {
             return Rooms.Find(room => room.Id == roomId);
         }
 
+        //Prints room and it's items
         public void GoToRoom(int roomId)
         {
             currentRoom = roomId;
             Room room = GetRoomById(roomId);
-            Console.WriteLine(room.Name);
+
+            Console.WriteLine("[{0}]\n", room.Name);
             Console.WriteLine(room.Description);
+
             for (int i = 0; i < room.Items.Count; i++) 
             {
-                Console.WriteLine(room.Items[i].Name);
+                Console.WriteLine("\nYou spot some things in the area:\n1. {0}", room.Items[i].Name);
             }
         }
 
-        //Get room id / get items by room id / Find item / Remove item from room / Pick up item 
+        // get items by room id / Find item / Remove item from room / Pick up item 
         //I want you to have to fight the monster before you can pick up the item
     }
 }
