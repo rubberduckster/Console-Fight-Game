@@ -13,7 +13,7 @@ namespace Console_Game
         public string Description;
         public int North, South, East, West;
         public List<Item> Items;
-        public Monster Monster { get; set; }
+        public Monster? Monster { get; set; }
         public Room(int roomId, string roomName, string roomDescription, List<Item>? roomItems, Monster? roomMonster, int roomNorth, int roomSouth, int roomEast, int roomWest)
         {
             Id = roomId;

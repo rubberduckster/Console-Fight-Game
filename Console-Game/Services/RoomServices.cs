@@ -12,6 +12,8 @@ namespace Console_Game
         public List <Room> Rooms { get; set; }
         public  PlayerServices PlayerServices { get; set; }
 
+        int currentRoom = 1;
+
         public RoomServices()
         {
             PlayerServices = new PlayerServices();
@@ -86,16 +88,33 @@ namespace Console_Game
                 new List<Item>
                 {
 
-                }, new Monster("Guardian crab", ""),
+                }, new Monster("Guardian crab", "", "", "", 50, false, 50),
                 11, 9, -1, -1),
 
                 new Room(11, "King crab lair", "",
                 new List<Item>
                 {
 
-                }, new Monster("King crab", ""),
+                }, new Monster("King crab", "", "", "", 200, false, 20),
                 -1, 10, -1, -1),
             };
+        }
+
+        public Room GetRoomById(int roomId)
+        {
+            return Rooms.Find(room => room.Id == roomId);
+        }
+
+        public void GoToRoom(int roomId)
+        {
+            currentRoom = roomId;
+            Room room = GetRoomById(roomId);
+            Console.WriteLine(room.Name);
+            Console.WriteLine(room.Description);
+            for (int i = 0; i < room.Items.Count; i++) 
+            {
+                Console.WriteLine(room.Items[i].Name);
+            }
         }
 
         //Get room id / get items by room id / Find item / Remove item from room / Pick up item 

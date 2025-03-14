@@ -13,6 +13,10 @@ namespace Program
         {
             //Game intro
             Console.WriteLine("Welcome to - Ocean Slayer -");
+
+            RoomServices roomService = new RoomServices();
+
+            roomService.GoToRoom(1);
         }
     }
 }
