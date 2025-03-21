@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Console_Game
 {
-    public class Player
+    public static class Player
     {
-        public string Name = "Fisherman Joe";
-        public int Health = 300;
-        public List<Item> Inventory = new List<Item>();
-        public Weapon? EquippedWeapon = null;
+        public static string Name = "Fisherman Joe";
+        public static int Health = 300;
+        public static List<Item> Inventory = new List<Item>();
+        public static Weapon? EquippedWeapon = null;
     }
 }

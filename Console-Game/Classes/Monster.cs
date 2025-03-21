@@ -8,23 +8,25 @@ namespace Console_Game
 {
     public class Monster
     {
+        public int Id;
         public string Name;
         public string Intro;
-        public string attackLine;
-        public string damageTakenLine;
+        public string AttackLine;
+        public string DamageTakenLine;
         public int Health;
         public bool Resistance;
         public int Damage;
 
-        public Monster(string monsterName, string monsterIntro, string monsterAttackLine, string monsterDamageTakenLine, int monsterHealth, bool monsterResistance, int monsterDamage)
+        public Monster(int Id, string name, string intro, string attackLine, string damageTakenLine, int health, bool resistance, int damage)
         {
-            Name = monsterName;
-            Intro = monsterIntro;
-            attackLine = monsterAttackLine;
-            damageTakenLine = monsterDamageTakenLine;
-            Health = monsterHealth;
-            Resistance = monsterResistance;
-            Damage = monsterDamage;
+            Id = Id;
+            Name = name;
+            Intro = intro;
+            AttackLine = attackLine;
+            DamageTakenLine = damageTakenLine;
+            Health = health;
+            Resistance = resistance;
+            Damage = damage;
         }
         //Take 0 dmg if resistance true
     }

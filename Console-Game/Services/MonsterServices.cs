@@ -8,6 +8,11 @@ namespace Console_Game.Services
 {
     internal class MonsterServices
     {
-
+        /*
+        public int MonsterTakeDamage(int damageTaken)
+        {
+            Monster monster;
+        }
+        */
     }
 }

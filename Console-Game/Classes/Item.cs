@@ -8,49 +8,20 @@ namespace Console_Game
 {
     public class Item
     {
-        public string Name;
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+
+        public Item(int id, string name, string description)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+        }
 
         public void Use()
         {
 
         }
-
-    }
-
-    public class Weapon : Item
-    {
-        public string AttackDescription;
-        public int Damage;
-        public bool IsRanged;
-        public int UsesLeft;
-
-        public Weapon(string weaponName, int weaponDamage, bool weaponIsRanged, int weaponUsesLeft)
-        {
-            Name = weaponName;
-            IsRanged = weaponIsRanged;
-            Damage = weaponDamage;
-            UsesLeft = weaponUsesLeft;
-        }
-
-        //Break or remove item (uses left)
-        public void Hit()
-        {
-            UsesLeft--;
-
-
-            if (IsRanged = false)
-            {
-                Damage = Damage * 2;
-            }
-        }
-
-    }
-
-    public class Potion : Item
-    {
-        public string type;
-        public int damageBoost;
-        public int healingBoost;
-        public int UsesLeft;
     }
 }
