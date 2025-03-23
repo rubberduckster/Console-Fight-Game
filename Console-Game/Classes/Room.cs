@@ -20,6 +20,7 @@ namespace Console_Game
             Name = roomName;
             Description = roomDescription;
             Items = roomItems;
+            Monster = roomMonster;
             North = roomNorth;
             South = roomSouth;
             East = roomEast;

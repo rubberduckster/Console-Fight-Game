@@ -10,14 +10,11 @@ namespace Console_Game
     {
         //List of rooms
         public List <Room> Rooms { get; set; }
-        public  PlayerServices PlayerServices { get; set; }
 
         int currentRoom = 1;
 
         public RoomServices()
         {
-            PlayerServices = new PlayerServices();
-
             Rooms = new List<Room>
             {
                 new Room(1, "Beach", "You walk up on the beach, standing at the edge of the water. You feel the waves wash over you feet.",
@@ -112,45 +109,136 @@ namespace Console_Game
             currentRoom = roomId;
             Room room = GetRoomById(roomId);
 
+            if (room.Monster != null)
+            {
+                bool victory = Fight(room.Monster);
+
+                if (victory)
+                {
+                    Console.WriteLine("You won!");
+                    room.Monster = null;
+                }
+                else
+                {
+                    Console.WriteLine("GAME OVER!");
+                    return;
+                }
+            }
+
             Console.WriteLine("[{0}]\n", room.Name);
             Console.WriteLine(room.Description);
-
-            int itemCount = 1;
 
             if (room.Items.Count > 0)
             {
                 Console.Write("\nYou spot some things in the area:\n");
             }
 
-            for (int i = 0; i < room.Items.Count; i++) 
+            for (int i = 0; i < room.Items.Count; i++)
             {
-                Console.Write("{0}. {1}\n", itemCount++, room.Items[i].Name);
-            }
-        }
-
-        //Gets items by id
-        public List<Item>? GetItemsByRoomId(int roomId)
-        {
-            for (int i = 0; i < Rooms.Count; i++)
-            {
-                if (Rooms[i].Id == roomId)
-                {
-                    return Rooms[i].Items;
-
-                }
+                Console.Write("{0}. {1}\n", i + 1, room.Items[i].Name);
             }
 
-            return null;
+            Console.Write("\nWhere do you want to go next? You can go:\n");
+
+            //Printing room direction options
+            if (room.North != -1)
+            {
+                Console.WriteLine("North [N]");
+            }
+            if (room.South != -1)
+            {
+                Console.WriteLine("South [S]");
+            }
+            if (room.East != -1)
+            {
+                Console.WriteLine("East [E]");
+            }
+            if (room.West != -1)
+            {
+                Console.WriteLine("West [W]");
+            }
+
+            //Taking user input and allowing to move between rooms
+            Console.WriteLine("");
+            string playerInput = Console.ReadLine();
+
+            List<string> arguments = playerInput.Split(' ').ToList();
+            string command = arguments[0];
+            arguments.RemoveAt(0);
+
+            switch (command.ToLower())
+            {
+                case "go":
+
+                    string direction = arguments[0].ToUpper();
+
+                    Console.Clear();
+                    if (direction == "N" && room.North != -1)
+                    {
+                        GoToRoom(room.North);
+                    }
+
+                    else if (direction == "S" && room.South != -1)
+                    {
+                        GoToRoom(room.South);
+                    }
+
+                    else if (direction == "E" && room.East != -1)
+                    {
+                        GoToRoom(room.East);
+                    }
+
+                    else if (direction == "W" && room.West != -1)
+                    {
+                        GoToRoom(room.West);
+                    }
+
+                    break;
+
+                //Pick up item //Add to player
+                case "pickup":
+                    string itemName = string.Join(" ", arguments);
+                    Item? item = FindItemByName(itemName, currentRoom);
+
+                    if(item != null)
+                    {
+                        RemoveItemFromRoom(room, item);
+                        Player.AddItem(item);
+                    }
+
+                    Console.Clear();
+                    Console.WriteLine($"You picked up {item.Name}! \n");
+                    GoToRoom(currentRoom);
+
+                    break;
+
+                //Show player inventory
+                case "inventory":
+                    Console.Clear();
+                    Console.WriteLine("Inventory: ");
+                    for (int i = 0; i < Player.Inventory.Count; i++)
+                    {
+                        Console.Write("{0}. {1}\n", i + 1, Player.Inventory[i].Name);
+                    }
+                    Console.WriteLine();
+                    GoToRoom(currentRoom);
+
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         //Find item by name
         public Item? FindItemByName(string itemName, int roomId)
         {
+            itemName = itemName.ToLower();
             Room? room = GetRoomById(roomId);
 
             foreach (Item item in room.Items)
             {
-                if (item.Name == itemName)
+                if (item.Name.ToLower() == itemName)
                 {
                     return item;
                 }
@@ -159,28 +247,73 @@ namespace Console_Game
         }
 
         //Remove item from room
-        public void RemoveItemFromRoom(int roomId, Item item)
+        public void RemoveItemFromRoom(Room room, Item item)
         {
-            GetRoomById(roomId)?.Items.Remove(item);
+            room.Items.Remove(item);
         }
+        
 
-        //Pick up item //Add to player
-        public void PickUpItem(string itemName, int roomId)
+        public bool Fight(Monster monster)
         {
-            Item? itemToPickUp = FindItemByName(itemName, roomId);
-
-            if (itemToPickUp != null)
+            while (monster.Health > 0) 
             {
-                PlayerServices.TakeItem(itemToPickUp);
-                RemoveItemFromRoom(roomId, itemToPickUp);
+                bool usedTurn = false;
+                while (!usedTurn)
+                {
+                    Console.WriteLine("You have entered a figth");
+                    string playerInput = Console.ReadLine();
+
+                    List<string> arguments = playerInput.Split(' ').ToList();
+                    string command = arguments[0];
+                    arguments.RemoveAt(0);
+
+                    Console.Clear();
+                    switch (command.ToLower())
+                    {
+                        case "attack":
+                            if (Player.EquippedWeapon != null)
+                            {
+                                monster.TakeDamage(Player.EquippedWeapon.Damage);
+                                Console.WriteLine($"{monster.DamageTakenLine} - {monster.Name} took {Player.EquippedWeapon.Damage} damage.");
+                            }
+                            else
+                            {
+                                monster.TakeDamage(Player.BaseDamage);
+                                Console.WriteLine($"{monster.DamageTakenLine} - {monster.Name} took {Player.BaseDamage} damage.");
+                            }
+                            usedTurn = true;
+                            break;
+
+                        case "equip":
+                            string itemName = string.Join(" ", arguments);
+                            Item? item = Player.FindItemByName(itemName);
+
+                            if (item != null && item is Weapon)
+                            {
+                                Player.EquippedWeapon = (Weapon)item;
+                                Console.WriteLine($"You equipped {item.Name}");
+                            }
+                            break;
+
+                        case "use":
+
+                            break;
+                    }
+                }
+
+                if (monster.Health > 0)
+                {
+                    Console.WriteLine("\n");
+                    Player.TakeDamage(monster.Damage);
+                    Console.WriteLine($"{monster.AttackLine} - {Player.Name} took {monster.Damage}");
+                }
+                else
+                {
+                    return true;
+                }
             }
-        }
 
-        /*
-        public Monster? GetMonsterByRoomId(string roomId)
-        {
-
+            return monster.Health <= 0;
         }
-        */
     }
 }

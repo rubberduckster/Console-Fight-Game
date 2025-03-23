@@ -20,18 +20,5 @@ namespace Console_Game
             Damage = damage;
             UsesLeft = usesLeft;
         }
-
-        //Break or remove item (uses left)
-        public void Hit()
-        {
-            UsesLeft--;
-
-
-            if (IsRanged = false)
-            {
-                Damage = Damage * 2;
-            }
-        }
-
     }
 }

@@ -17,9 +17,9 @@ namespace Console_Game
         public bool Resistance;
         public int Damage;
 
-        public Monster(int Id, string name, string intro, string attackLine, string damageTakenLine, int health, bool resistance, int damage)
+        public Monster(int id, string name, string intro, string attackLine, string damageTakenLine, int health, bool resistance, int damage)
         {
-            Id = Id;
+            Id = id;
             Name = name;
             Intro = intro;
             AttackLine = attackLine;
@@ -29,5 +29,9 @@ namespace Console_Game
             Damage = damage;
         }
         //Take 0 dmg if resistance true
+        public void TakeDamage(int damage)
+        {
+            Health -= damage;
+        }
     }
 }
