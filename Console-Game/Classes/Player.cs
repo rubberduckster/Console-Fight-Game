@@ -13,6 +13,7 @@ namespace Console_Game
         public static int BaseDamage = 1;
         public static List<Item> Inventory = new List<Item>();
         public static Weapon? EquippedWeapon = null;
+        public static List<Item> StatusEffects;
 
         public static void AddItem(Item item)
         {
@@ -35,6 +36,28 @@ namespace Console_Game
                 }
             }
             return null;
+        }
+
+        //Unequip weapon and remove from inventory - Weapon durability
+        public static void RemoveWeaponFromPlayer(Weapon weapon)
+        {
+            if (weapon.UsesLeft <= 0)
+            {
+                Inventory.Remove(weapon);
+                EquippedWeapon = null;
+                Console.WriteLine("Your weapon broke");
+            }
+        }
+
+        //Move potion from inventory to status list when there's 0 uses left
+
+        //Remove potion from status list when effect runs out
+        public static void RemovePotionFromInventory(Potion potion)
+        {
+            if (potion.UsesLeft <= 0)
+            {
+                Inventory.Remove(potion);
+            }
         }
     }
 }

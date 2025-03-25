@@ -18,10 +18,5 @@ namespace Console_Game
             Name = name;
             Description = description;
         }
-
-        public void Use()
-        {
-
-        }
     }
 }

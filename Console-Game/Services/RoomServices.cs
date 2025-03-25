@@ -20,7 +20,7 @@ namespace Console_Game
                 new Room(1, "Beach", "You walk up on the beach, standing at the edge of the water. You feel the waves wash over you feet.",
                 new List<Item>
                 {
-                    new Weapon(1, "Wooden stick", "", 5, false, 5)
+                    new Weapon(1, "Wooden stick", "A worn down drenched piece of wood.", 5, false, 2)
                 }, null,
                 2, -1, -1, -1),
                 
@@ -34,7 +34,7 @@ namespace Console_Game
                 new Room(3, "Coral reef", "You enter and meet a world of colors. There's corals as far as you can see.\nYou feel yourself soothed by the sight.",
                 new List<Item>
                 {
-                    new Potion(1, "1.5x ATK potion", "A potion that will boost your next [5] attacks by 1.5!"),
+                    new Potion(1, "ATK potion", "A potion that will boost your currently equipped gear for the next [5] attacks by 2x!", "Damage", 2, 0, 1),
                     new Weapon(2, "Knife", "", 20, false, 5)
                 }, null,
                 6, 2, 4, 5),
@@ -42,7 +42,7 @@ namespace Console_Game
                 new Room(4, "Glowing algae cave", "You dove towards a small creek of light. You were met with a big cave full of glowing algae.\nYou felt a sense of comfort in this place.",
                 new List<Item>
                 {
-                    new Potion(2, "50+ HP potion", "")
+                    new Potion(2, "HP potion", "A potion that heals player by 50+ HP.", "Healing", 0, 50, 1)
                 }, null,
                 7, -1, -1, 3),
 
@@ -63,14 +63,14 @@ namespace Console_Game
                 new Room(7, "Red shark seas", "You swam forward and suddenly found yourself in a swarm of blood thirsty sharks! You gotta get a break through them.",
                 new List<Item>
                 {
-                    new Weapon(3, "Harpoon", "", 80, true, 10)
+                    new Weapon(3, "Harpoon", "", 120, true, 10)
                 }, new Monster(3, "Shark", "", "", "", 200, true, 125),
                 -1, 4, -1, 6),
 
                 new Room(8, "Sunken ship", "A sunken ship lies before you. There's a gabbing hole where it was hit. It seems risky to cram yourself through but you must explore the depths.",
                 new List<Item>
                 {
-                    new Weapon(4, "Cannon balls", "", 50, true, 3)
+                    new Weapon(4, "Cannon balls", "", 80, true, 3)
                 }, null,
                 -1, 5, 6, -1),
 
@@ -115,7 +115,7 @@ namespace Console_Game
 
                 if (victory)
                 {
-                    Console.WriteLine("You won!");
+                    Console.WriteLine("\nYou won the battle!\n");
                     room.Monster = null;
                 }
                 else
@@ -138,7 +138,7 @@ namespace Console_Game
                 Console.Write("{0}. {1}\n", i + 1, room.Items[i].Name);
             }
 
-            Console.Write("\nWhere do you want to go next? You can go:\n");
+            Console.Write("\nDirections available can go:\n");
 
             //Printing room direction options
             if (room.North != -1)
@@ -159,6 +159,7 @@ namespace Console_Game
             }
 
             //Taking user input and allowing to move between rooms
+            Console.WriteLine("\nCommand options:\n1. Go [Direction]\n2. Pickup [Item]\n3. Inventory\n");
             Console.WriteLine("");
             string playerInput = Console.ReadLine();
 
@@ -218,7 +219,7 @@ namespace Console_Game
                     Console.WriteLine("Inventory: ");
                     for (int i = 0; i < Player.Inventory.Count; i++)
                     {
-                        Console.Write("{0}. {1}\n", i + 1, Player.Inventory[i].Name);
+                        Console.Write("{0}. {1} - {2}\n", i + 1, Player.Inventory[i].Name, Player.Inventory[i].Description);
                     }
                     Console.WriteLine();
                     GoToRoom(currentRoom);
@@ -251,16 +252,31 @@ namespace Console_Game
         {
             room.Items.Remove(item);
         }
-        
 
         public bool Fight(Monster monster)
         {
+            int battleStart = 0;
+
             while (monster.Health > 0) 
             {
+
+                if (battleStart == 1)
+                {
+                    Console.WriteLine("\nCommand options:\n1. Attack\n2. Inventory\n3. Equip [Weapon]\n4. Use [Item]");
+                }
+
+                if (battleStart == 0)
+                {
+                    Console.WriteLine(monster.Intro + "\n");
+                    Console.WriteLine("You've now entered battle!!!");
+                    Console.WriteLine("\nCommand options:\n1. Attack\n2. Inventory\n3. Equip [Weapon]\n4. Use [Item]");
+                    battleStart = 1;
+                }
+
                 bool usedTurn = false;
                 while (!usedTurn)
                 {
-                    Console.WriteLine("You have entered a figth");
+                    Console.WriteLine();
                     string playerInput = Console.ReadLine();
 
                     List<string> arguments = playerInput.Split(' ').ToList();
@@ -273,15 +289,45 @@ namespace Console_Game
                         case "attack":
                             if (Player.EquippedWeapon != null)
                             {
-                                monster.TakeDamage(Player.EquippedWeapon.Damage);
-                                Console.WriteLine($"{monster.DamageTakenLine} - {monster.Name} took {Player.EquippedWeapon.Damage} damage.");
+                                if (!monster.Resistance)
+                                {
+                                    if (Player.StatusEffects./*Potion type effect*/ < 0)
+                                    {
+                                        monster.TakeDamage(Player.EquippedWeapon.Damage);
+                                    }
+                                    else if (Player.StatusEffects./*Potion type effect*/ > 0)
+                                    {
+                                        monster.TakeDamage(Player.EquippedWeapon.Damage + 2/*help how to enter potion attributes*/);
+                                    }
+                                    
+                                    Player.EquippedWeapon.UsesLeft--;
+                                    Player.StatusEffects./*Potion type effect*/--;
+                                    Console.WriteLine($"{monster.DamageTakenLine} - {monster.Name} took {Player.EquippedWeapon.Damage} damage.");
+                                    Player.RemoveWeaponFromPlayer(Player.EquippedWeapon);
+                                }
+                                else if (monster.Resistance = true)
+                                {
+                                    if (!Player.EquippedWeapon.IsRanged)
+                                    {
+                                        Console.WriteLine($"{monster.Name} is immune to melee and took 0 damage.");
+                                    }
+                                    else if (Player.EquippedWeapon.IsRanged = true)
+                                    {
+                                        monster.TakeDamage(Player.EquippedWeapon.Damage);
+                                        Player.EquippedWeapon.UsesLeft--;
+                                        Console.WriteLine($"{monster.DamageTakenLine} - {monster.Name} took {Player.EquippedWeapon.Damage} damage.");
+                                        Player.RemoveWeaponFromPlayer(Player.EquippedWeapon);
+                                    }
+                                }
                             }
                             else
                             {
                                 monster.TakeDamage(Player.BaseDamage);
                                 Console.WriteLine($"{monster.DamageTakenLine} - {monster.Name} took {Player.BaseDamage} damage.");
                             }
+
                             usedTurn = true;
+
                             break;
 
                         case "equip":
@@ -293,9 +339,43 @@ namespace Console_Game
                                 Player.EquippedWeapon = (Weapon)item;
                                 Console.WriteLine($"You equipped {item.Name}");
                             }
+
                             break;
 
                         case "use":
+                            string PotionName = string.Join(" ", arguments);
+                            Item? potion = Player.FindItemByName(PotionName);
+
+                            if (potion != null && potion is Potion)
+                            {
+                                Potion potionCasted = (Potion)potion;
+                                potionCasted.UsesLeft--;
+
+                                if (potionCasted.Type == "Healing")
+                                {
+                                    Player.Health = Player.Health + potionCasted.HealingBoost;
+
+                                    Console.WriteLine($"You used {potionCasted.Name} and healed {potionCasted.HealingBoost} - Your HP is now {Player.Health}");
+                                    Player.RemovePotionFromInventory(potionCasted);
+                                }
+                                if (potionCasted.Type == "Damage")
+                                {
+                                    Player.StatusEffects./*Potion type effect*/ = Player.StatusEffects./*Potion type effect*/ + 5;
+                                    Player.RemovePotionFromInventory(potionCasted);
+                                }
+                            }
+
+                            break;
+
+                        case "inventory":
+                            Console.Clear();
+                            Console.WriteLine("Inventory: ");
+                            for (int i = 0; i < Player.Inventory.Count; i++)
+                            {
+                                Console.Write("{0}. {1} - {2}\n", i + 1, Player.Inventory[i].Name, Player.Inventory[i].Description);
+                            }
+                            Console.WriteLine();
+                            GoToRoom(currentRoom);
 
                             break;
                     }

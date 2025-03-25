@@ -8,13 +8,20 @@ namespace Console_Game
 {
     public class Potion : Item
     {
-        public int damageBoost;
-        public int healingBoost;
+        public string Type;
+        public int DamageBoost;
+        public int HealingBoost;
         public int UsesLeft;
+        public int StatusEffect;
 
-        public Potion(int id, string name, string description) :base(id, name, description)
+        public Potion(int id, string name, string description, string type, int damageBoost, int healingBoost, int usesLeft) :base(id, name, description)
         {
-
+            Name = name;
+            Description = description;
+            Type = type;
+            DamageBoost = damageBoost;
+            HealingBoost = healingBoost;
+            UsesLeft = usesLeft;
         }
     }
 }
