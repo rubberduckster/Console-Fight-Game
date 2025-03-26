@@ -12,8 +12,9 @@ namespace Console_Game
         public static int Health = 300;
         public static int BaseDamage = 1;
         public static List<Item> Inventory = new List<Item>();
+        public static List<Item> StatusEffects = new List<Item>();
+        public static Potion? PotionEffects = null;
         public static Weapon? EquippedWeapon = null;
-        public static List<Item> StatusEffects;
 
         public static void AddItem(Item item)
         {
@@ -50,14 +51,24 @@ namespace Console_Game
         }
 
         //Move potion from inventory to status list when there's 0 uses left
+        public static void InventoryToEffectsList(Potion potion)
+        {
+                StatusEffects.Add(potion);
+                Inventory.Remove(potion);
+        }
 
         //Remove potion from status list when effect runs out
+        public static void RemovePotionFromEffectsList(Potion potion)
+        {
+            if (potion.StatusEffect <= 0)
+            {
+                StatusEffects.Remove(potion);
+            }
+        }
+
         public static void RemovePotionFromInventory(Potion potion)
         {
-            if (potion.UsesLeft <= 0)
-            {
-                Inventory.Remove(potion);
-            }
+            Inventory.Remove(potion);
         }
     }
 }

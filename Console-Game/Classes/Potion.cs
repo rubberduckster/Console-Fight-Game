@@ -11,17 +11,16 @@ namespace Console_Game
         public string Type;
         public int DamageBoost;
         public int HealingBoost;
-        public int UsesLeft;
         public int StatusEffect;
 
-        public Potion(int id, string name, string description, string type, int damageBoost, int healingBoost, int usesLeft) :base(id, name, description)
+        public Potion(int id, string name, string description, string type, int damageBoost, int healingBoost, int statusEffect) :base(id, name, description)
         {
             Name = name;
             Description = description;
             Type = type;
             DamageBoost = damageBoost;
             HealingBoost = healingBoost;
-            UsesLeft = usesLeft;
+            StatusEffect = statusEffect;
         }
     }
 }

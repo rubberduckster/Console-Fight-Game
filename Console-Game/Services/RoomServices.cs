@@ -291,17 +291,17 @@ namespace Console_Game
                             {
                                 if (!monster.Resistance)
                                 {
-                                    if (Player.StatusEffects./*Potion type effect*/ < 0)
+                                    if (Player.StatusEffects.Count == 0) //This shit is hard... no instance? no reference?? kms
                                     {
                                         monster.TakeDamage(Player.EquippedWeapon.Damage);
                                     }
-                                    else if (Player.StatusEffects./*Potion type effect*/ > 0)
+                                    else if (Player.StatusEffects.Count != 0 && Player.PotionEffects.StatusEffect > 0)
                                     {
-                                        monster.TakeDamage(Player.EquippedWeapon.Damage + 2/*help how to enter potion attributes*/);
+                                        monster.TakeDamage(Player.EquippedWeapon.Damage + Player.PotionEffects.DamageBoost);
+                                        Player.PotionEffects.StatusEffect--;
                                     }
                                     
                                     Player.EquippedWeapon.UsesLeft--;
-                                    Player.StatusEffects./*Potion type effect*/--;
                                     Console.WriteLine($"{monster.DamageTakenLine} - {monster.Name} took {Player.EquippedWeapon.Damage} damage.");
                                     Player.RemoveWeaponFromPlayer(Player.EquippedWeapon);
                                 }
@@ -349,7 +349,6 @@ namespace Console_Game
                             if (potion != null && potion is Potion)
                             {
                                 Potion potionCasted = (Potion)potion;
-                                potionCasted.UsesLeft--;
 
                                 if (potionCasted.Type == "Healing")
                                 {
@@ -360,8 +359,11 @@ namespace Console_Game
                                 }
                                 if (potionCasted.Type == "Damage")
                                 {
-                                    Player.StatusEffects./*Potion type effect*/ = Player.StatusEffects./*Potion type effect*/ + 5;
-                                    Player.RemovePotionFromInventory(potionCasted);
+                                    Player.PotionEffects.StatusEffect = Player.PotionEffects.StatusEffect + potionCasted.StatusEffect;
+                                    Player.InventoryToEffectsList(potionCasted);
+
+                                    Console.WriteLine($"You used {potionCasted.Name} and boosted your ATK by {potionCasted.DamageBoost}x for 5 turns!");
+                                    //Possibly make an object that holds effets for the player
                                 }
                             }
 
