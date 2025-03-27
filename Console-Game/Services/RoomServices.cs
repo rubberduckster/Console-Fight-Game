@@ -17,14 +17,14 @@ namespace Console_Game
         {
             Rooms = new List<Room>
             {
-                new Room(1, "Beach", "You walk up on the beach, standing at the edge of the water. You feel the waves wash over you feet.",
+                new Room(1, "Beach", "You are on the beach, standing at the edge of the water. You feel the waves wash over you feet.",
                 new List<Item>
                 {
-                    new Weapon(1, "Wooden stick", "A worn down drenched piece of wood.", 5, false, 2)
+                    new Weapon(1, "Wooden stick", "A worn down drenched piece of wood. Damage - 5 | Durability - 2", 5, false, 2)
                 }, null,
                 2, -1, -1, -1),
                 
-                new Room(2, "Low waters", "You're knee deep in the water now. You're blankly staring into your own reflection in the ocean waters.",
+                new Room(2, "Low waters", "You're knee deep in the water. You're blankly staring into your own reflection in the ocean waters.",
                 new List<Item>
                 {
                     
@@ -34,8 +34,8 @@ namespace Console_Game
                 new Room(3, "Coral reef", "You enter and meet a world of colors. There's corals as far as you can see.\nYou feel yourself soothed by the sight.",
                 new List<Item>
                 {
-                    new Potion(1, "ATK potion", "A potion that will boost your currently equipped gear for the next [5] attacks by 2x!", "Damage", 2, 0, 1),
-                    new Weapon(2, "Knife", "", 20, false, 5)
+                    //new Potion(1, "ATK potion", "A potion that will boost your currently equipped gear for the next [5] attacks by 2x!", "Damage", 2, 0, 1),
+                    new Weapon(2, "Knife", "A rusty knife that was long lost at sea. Damage - 20", 20, false, 5)
                 }, null,
                 6, 2, 4, 5),
 
@@ -46,31 +46,31 @@ namespace Console_Game
                 }, null,
                 7, -1, -1, 3),
 
-                new Room(5, "Seaweed forest", "You've entered a forest of seaweed.\nYou feel it all closing in on you and the restrains of slowly getting entackled in it's ropes.\nYou don't wanna stay too long.",
+                new Room(5, "Seaweed forest", "You're a forest of seaweed.\nYou feel it all closing in on you and the restrains of slowly getting entackled in it's ropes. You don't wanna stay too long.",
                 new List<Item>
                 {
 
-                }, new Monster(2, "Eel", "Yikes! you see an eerie eel slithering towards you!", "It sends an electrical impuls into the surrounding water and hurts you", "ouch", 50, false, 10),
+                }, new Monster(2, "Eel", "Yikes! you see an eerie eel slithering towards you!", "It sends an electrical impuls into the surrounding water and hurts you.", "You got a hit on the eel and it hissed at you.", 50, false, 10),
                 8, -1, 3, -1),
 
-                new Room(6, "Starfish mountains", "You're towered by tall rocks all around you.\nThe rocks are spotted with starfish, covering it all over",
+                new Room(6, "Starfish mountains", "You're towered by tall rocks all around you.\nThe rocks are spotted with starfish, and you can't help but think of the open night sky.",
                 new List<Item>
                 {
-
+                    //I imagine some rly good potion here... maybe long lasting heal
                 }, null,
                 9, 3, 7, 8),
 
-                new Room(7, "Red shark seas", "You swam forward and suddenly found yourself in a swarm of blood thirsty sharks! You gotta get a break through them.",
+                new Room(7, "Red shark seas", "You found yourself in a swarm of blood thirsty sharks! This place isn't safe, you better get outta here!",
                 new List<Item>
                 {
-                    new Weapon(3, "Harpoon", "", 120, true, 10)
-                }, new Monster(3, "Shark", "", "", "", 200, true, 125),
+                    new Weapon(3, "Harpoon", "A powerful shot, that can pierce through anything. Damage - 120", 120, true, 10)
+                }, new Monster(3, "Shark", "A shark got the sense of you and is headed straight for you!", "The shark got a hold of you and shook you viciously.", "You hit the shark, seeing it's eyes growing with anger.", 200, true, 125),
                 -1, 4, -1, 6),
 
                 new Room(8, "Sunken ship", "A sunken ship lies before you. There's a gabbing hole where it was hit. It seems risky to cram yourself through but you must explore the depths.",
                 new List<Item>
                 {
-                    new Weapon(4, "Cannon balls", "", 80, true, 3)
+                    new Weapon(4, "Cannon balls", "Damage - 80", 80, true, 3)
                 }, null,
                 -1, 5, 6, -1),
 
@@ -81,18 +81,19 @@ namespace Console_Game
                 }, null,
                 10, 6, -1, -1),
 
-                new Room(10, "King crab gates", "",
+                new Room(10, "King crab gates", "You see a big stone entrance, with weird enscryptions and drawings.",
                 new List<Item>
                 {
 
-                }, new Monster(4, "Guardian crab", "", "", "", 50, false, 50),
+                }, new Monster(4, "Guardian crab", "There is a big crab guarding the entrance, there is no way it'll let you through.", "You tried pushing past the guard but got pieced with it's spear.", "You got a hit on the crab, breaking part of it's armor.", 50, false, 50),
                 11, 9, -1, -1),
 
-                new Room(11, "King crab lair", "",
+                new Room(11, "King crab lair", "You've entered a room so big, you can't see and end to it. What you do see though, is a floor full of riches",
                 new List<Item>
                 {
-
-                }, new Monster(5, "King crab", "", "", "", 200, false, 20),
+                    new Item(1, "Bag of gold", "A bag 3 times the size of you. How you're carrying it, is a mystery."),
+                    new Item(1, "Wooden chest", "A chest that carries enormous gems of all colors!")
+                }, new Monster(5, "King crab", "The big King crab rises from it slumber upon your arrival. It's here to protect it's Kingdom.", "The King lift you with it's worn, yet sharp claws.\nIt clutches down on you, causing you immense pain. You might have broken a rib or two.", "You used everything you got in you.", 200, false, 20),
                 -1, 10, -1, -1),
             };
         }
@@ -111,6 +112,9 @@ namespace Console_Game
 
             if (room.Monster != null)
             {
+                Console.WriteLine("[{0}]\n", room.Name);
+                Console.WriteLine(room.Description + "\n");
+
                 bool victory = Fight(room.Monster);
 
                 if (victory)
@@ -219,7 +223,7 @@ namespace Console_Game
                     Console.WriteLine("Inventory: ");
                     for (int i = 0; i < Player.Inventory.Count; i++)
                     {
-                        Console.Write("{0}. {1} - {2}\n", i + 1, Player.Inventory[i].Name, Player.Inventory[i].Description);
+                        Console.Write("{0}. {1} - {2} ", i + 1, Player.Inventory[i].Name, Player.Inventory[i].Description);
                     }
                     Console.WriteLine();
                     GoToRoom(currentRoom);
@@ -268,7 +272,6 @@ namespace Console_Game
                 if (battleStart == 0)
                 {
                     Console.WriteLine(monster.Intro + "\n");
-                    Console.WriteLine("You've now entered battle!!!");
                     Console.WriteLine("\nCommand options:\n1. Attack\n2. Inventory\n3. Equip [Weapon]\n4. Use [Item]");
                     battleStart = 1;
                 }
@@ -309,6 +312,7 @@ namespace Console_Game
                                 {
                                     if (!Player.EquippedWeapon.IsRanged)
                                     {
+                                        Player.EquippedWeapon.UsesLeft--;
                                         Console.WriteLine($"{monster.Name} is immune to melee and took 0 damage.");
                                     }
                                     else if (Player.EquippedWeapon.IsRanged = true)
@@ -340,6 +344,8 @@ namespace Console_Game
                                 Console.WriteLine($"You equipped {item.Name}");
                             }
 
+                            Console.WriteLine("\nCommand options:\n1. Attack\n2. Inventory\n3. Equip [Weapon]\n4. Use [Item]");
+
                             break;
 
                         case "use":
@@ -357,14 +363,16 @@ namespace Console_Game
                                     Console.WriteLine($"You used {potionCasted.Name} and healed {potionCasted.HealingBoost} - Your HP is now {Player.Health}");
                                     Player.RemovePotionFromInventory(potionCasted);
                                 }
-                                if (potionCasted.Type == "Damage")
+                                /*if (potionCasted.Type == "Damage")
                                 {
                                     Player.PotionEffects.StatusEffect = Player.PotionEffects.StatusEffect + potionCasted.StatusEffect;
                                     Player.InventoryToEffectsList(potionCasted);
 
                                     Console.WriteLine($"You used {potionCasted.Name} and boosted your ATK by {potionCasted.DamageBoost}x for 5 turns!");
                                     //Possibly make an object that holds effets for the player
-                                }
+                                }*/
+
+                                Console.WriteLine("\nCommand options:\n1. Attack\n2. Inventory\n3. Equip [Weapon]\n4. Use [Item]");
                             }
 
                             break;
@@ -376,8 +384,8 @@ namespace Console_Game
                             {
                                 Console.Write("{0}. {1} - {2}\n", i + 1, Player.Inventory[i].Name, Player.Inventory[i].Description);
                             }
-                            Console.WriteLine();
-                            GoToRoom(currentRoom);
+
+                            Console.WriteLine("\nCommand options:\n1. Attack\n2. Inventory\n3. Equip [Weapon]\n4. Use [Item]");
 
                             break;
                     }
@@ -387,7 +395,7 @@ namespace Console_Game
                 {
                     Console.WriteLine("\n");
                     Player.TakeDamage(monster.Damage);
-                    Console.WriteLine($"{monster.AttackLine} - {Player.Name} took {monster.Damage}");
+                    Console.WriteLine($"{monster.AttackLine} - {Player.Name} took {monster.Damage} damage. You have {Player.Health}HP remaining.");
                 }
                 else
                 {

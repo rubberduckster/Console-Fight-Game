@@ -46,7 +46,7 @@ namespace Console_Game
             {
                 Inventory.Remove(weapon);
                 EquippedWeapon = null;
-                Console.WriteLine("Your weapon broke");
+                Console.WriteLine("\nYour weapon broke and you disposed of it.");
             }
         }
 
